@@ -9,19 +9,17 @@ const nextConfig = {
     loader: 'custom',
     loaderFile: './lib/utils/cloudinaryLoader.ts',
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/**',
-      },
-      // Strapi local upload provider — served from the CMS during dev.
-      // Replace with your prod Strapi/CDN host before deploying.
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '1337',
-        pathname: '/uploads/**',
-      },
+      // Cloudinary — primary CDN for product imagery and Strapi uploads in prod.
+      { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
+      // Unsplash — used by the seed for placeholder product thumbnails.
+      // Remove once you replace seeded images with real photos on Cloudinary.
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+      // Strapi local upload provider — dev only.
+      { protocol: 'http', hostname: 'localhost', port: '1337', pathname: '/uploads/**' },
+      // Strapi on Railway preview URL.
+      { protocol: 'https', hostname: '**.up.railway.app', pathname: '/uploads/**' },
+      // Strapi on your custom subdomain.
+      { protocol: 'https', hostname: 'cms.vanilla-wear.com', pathname: '/uploads/**' },
     ],
   },
   experimental: {
