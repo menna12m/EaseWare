@@ -50,7 +50,7 @@ export function ReviewSection({ productId, initialReviews }: Props) {
     setSubmitting(true);
     try {
       const { review } = await submitReview(productId, {
-        reviewer_name: name.trim(),
+        customer_name: name.trim(),
         rating,
         body: body.trim(),
       });

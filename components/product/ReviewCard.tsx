@@ -11,7 +11,7 @@ export function ReviewCard({ review }: { review: Review }) {
   return (
     <article className="rounded-lg border border-ink/10 bg-cream-50 p-5">
       <div className="flex items-center justify-between gap-2">
-        <p className="font-medium text-ink">{review.reviewer_name}</p>
+        <p className="font-medium text-ink">{review.customer_name}</p>
         <span className="text-xs text-ink-soft">{date}</span>
       </div>
       <StarRating rating={review.rating} className="mt-1" />

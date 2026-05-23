@@ -11,7 +11,13 @@ export async function POST(request: NextRequest) {
   const secretFromQuery = request.nextUrl.searchParams.get('secret');
   const expected = process.env.REVALIDATE_SECRET;
 
-  let body: { secret?: string; tags?: string[]; paths?: string[] } = {};
+  let body: {
+    secret?: string;
+    tag?: string;
+    tags?: string[];
+    path?: string;
+    paths?: string[];
+  } = {};
   try {
     body = await request.json();
   } catch {
@@ -22,8 +28,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, error: 'invalid secret' }, { status: 401 });
   }
 
-  const tags = body.tags ?? [];
-  const paths = body.paths ?? [];
+  // Accept both singular (Strapi/Medusa lifecycle hooks) and plural (manual).
+  const tags = body.tags ?? (body.tag ? [body.tag] : []);
+  const paths = body.paths ?? (body.path ? [body.path] : []);
 
   for (const tag of tags) revalidateTag(tag);
   for (const path of paths) revalidatePath(path);

@@ -58,7 +58,7 @@ export type ProductCardModel = {
 
 export type Review = {
   id: string;
-  reviewer_name: string;
+  customer_name: string;
   rating: number;
   body: string;
   created_at: string;
