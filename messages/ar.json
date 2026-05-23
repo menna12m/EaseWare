@@ -196,8 +196,12 @@
     "wishlist": "قائمة الرغبات",
     "signOut": "تسجيل الخروج",
     "orderHistory": "سجل الطلبات",
-    "noOrders": "لم تقومي بأي طلب بعد.",
-    "noWishlist": "لا شيء محفوظ بعد. اضغطي على القلب لإضافة أي قطعة هنا."
+    "orderNumber": "الطلب رقم {id}",
+    "noOrders": "لا توجد طلبات بعد. ابحثي عن شيء ناعم.",
+    "startShopping": "ابدئي التسوق",
+    "noWishlist": "لا شيء محفوظ بعد. اضغطي على القلب لإضافة أي قطعة هنا.",
+    "startBrowsing": "تصفحي المتجر",
+    "removeFromWishlist": "إزالة من قائمة الرغبات"
   },
   "Login": {
     "title": "مرحبًا بعودتك.",
@@ -208,6 +212,22 @@
     "submitting": "جارٍ تسجيل الدخول…",
     "newHere": "جديدة هنا؟",
     "createAccount": "أنشئي حسابًا",
+    "notConfigured": "المصادقة غير مهيأة بعد. أضيفي بيانات Supabase إلى .env.local."
+  },
+  "Signup": {
+    "title": "أنشئي حسابك.",
+    "subtitle": "حقيبة واحدة لطلباتك وعناوينك وقائمة رغباتك.",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordHint": "8 أحرف على الأقل.",
+    "submit": "إنشاء حساب",
+    "submitting": "جارٍ إنشاء الحساب…",
+    "alreadyHave": "لديكِ حساب بالفعل؟",
+    "signInInstead": "سجلي الدخول",
+    "checkEmailTitle": "أوشكنا.",
+    "checkEmailBody": "أرسلنا رابط تأكيد إلى {email}. اضغطي عليه لإنهاء إعداد حسابك.",
     "notConfigured": "المصادقة غير مهيأة بعد. أضيفي بيانات Supabase إلى .env.local."
   },
   "NotFound": {

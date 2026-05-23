@@ -87,7 +87,7 @@ export function ProductPurchasePanel({ product }: Props) {
   const addItem = useCartStore((s) => s.addItem);
   const setCartOpen = useCartStore((s) => s.setOpen);
   const isWishlisted = useWishlistStore((s) => s.productIds.includes(product.id));
-  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const toggleWishlist = useWishlistStore((s) => s.toggleEverywhere);
   const addLastViewed = useLastViewedStore((s) => s.addProduct);
 
   // Record last-viewed on mount of this client island.

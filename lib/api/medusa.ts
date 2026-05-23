@@ -103,9 +103,9 @@ export async function submitReview(
 
 // ─── Wishlist ──────────────────────────────────────────────────────────────
 // Client-side helpers that hit Next.js' /api/wishlist bridge, which forwards
-// to Medusa with a server-minted JWT. The Supabase session is enforced on
-// the bridge side — never call Medusa's /store/wishlist directly from the
-// browser, the JWT must stay server-side.
+// to Medusa with the customer's session cookie. The auth check happens on the
+// bridge side — never call Medusa's /store/wishlist directly from the
+// browser, the customer JWT must stay in an httpOnly cookie.
 
 export async function getWishlist(): Promise<{
   product_ids: string[];

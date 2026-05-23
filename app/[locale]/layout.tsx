@@ -7,6 +7,7 @@ import '@/styles/globals.css';
 import { Navbar } from '@/components/shared/Navbar';
 import { Footer } from '@/components/shared/Footer';
 import { PageTransition } from '@/components/shared/PageTransition';
+import { WishlistSync } from '@/components/shared/WishlistSync';
 import { locales, localeDirection, type Locale } from '@/i18n';
 
 const inter = Inter({
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <WishlistSync />
           <Navbar />
           <PageTransition>{children}</PageTransition>
           <Footer />

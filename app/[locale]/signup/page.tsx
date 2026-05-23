@@ -7,12 +7,14 @@ import { Link, useRouter } from '@/lib/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function LoginPage() {
-  const t = useTranslations('Login');
+export default function SignupPage() {
+  const t = useTranslations('Signup');
   const router = useRouter();
   const params = useSearchParams();
   const redirectTo = params.get('redirectTo') || '/account';
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState<string | null>(null);
@@ -23,16 +25,29 @@ export default function LoginPage() {
     setBusy(true);
     setErr(null);
 
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+        first_name: firstName.trim() || undefined,
+        last_name: lastName.trim() || undefined,
+      }),
     });
 
+    const data = await res.json().catch(() => ({}));
+
     if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      setErr(data?.error || 'Something went wrong.');
+      setErr(data?.error || 'Could not create account.');
       setBusy(false);
+      return;
+    }
+
+    // Register endpoint signs us in by default; if not, route to /login.
+    if (data?.signedIn === false) {
+      router.push('/login');
+      router.refresh();
       return;
     }
 
@@ -47,6 +62,22 @@ export default function LoginPage() {
       <p className="mt-2 text-sm text-ink-soft">{t('subtitle')}</p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Input
+            type="text"
+            placeholder={t('firstName')}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            autoComplete="given-name"
+          />
+          <Input
+            type="text"
+            placeholder={t('lastName')}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            autoComplete="family-name"
+          />
+        </div>
         <Input
           type="email"
           placeholder={t('email')}
@@ -62,8 +93,9 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
-          autoComplete="current-password"
+          autoComplete="new-password"
         />
+        <p className="text-xs text-ink-soft">{t('passwordHint')}</p>
         {err && <p className="text-sm text-destructive">{err}</p>}
         <Button
           type="submit"
@@ -77,9 +109,9 @@ export default function LoginPage() {
       </form>
 
       <p className="mt-6 text-sm text-ink-soft">
-        {t('newHere')}{' '}
-        <Link href="/signup" className="font-medium text-ink hover:underline">
-          {t('createAccount')}
+        {t('alreadyHave')}{' '}
+        <Link href="/login" className="font-medium text-ink hover:underline">
+          {t('signInInstead')}
         </Link>
       </p>
     </div>
