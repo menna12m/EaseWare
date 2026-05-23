@@ -3,41 +3,16 @@
 import { ReactNode, useMemo } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Configure } from 'react-instantsearch';
+import { medusaSearchClient } from '@/lib/shop/medusa-search-client';
 
-// Empty-results stub. Used when Algolia env vars are missing — keeps the shop
-// UI rendering instead of throwing "Unreachable hosts". Drop in real keys to
-// switch over without code changes.
-const stubClient = {
-  search<T = unknown>(requests: { indexName: string }[]) {
-    return Promise.resolve({
-      results: requests.map(() => ({
-        hits: [] as T[],
-        nbHits: 0,
-        nbPages: 0,
-        page: 0,
-        processingTimeMS: 0,
-        hitsPerPage: 0,
-        exhaustiveNbHits: true,
-        query: '',
-        params: '',
-      })),
-    });
-  },
-  searchForFacetValues() {
-    return Promise.resolve([]);
-  },
-} as unknown as ReturnType<typeof algoliasearch>;
-
+// Falls back to a Medusa-backed adapter when Algolia env vars are absent —
+// see lib/shop/medusa-search-client.ts. Drop the Algolia keys into .env.local
+// to switch over without code changes.
 function makeClient() {
   const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
   const searchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY;
   if (!appId || !searchKey) {
-    if (typeof window !== 'undefined') {
-      console.warn(
-        '[shop] Algolia env vars not set — using empty-results stub. Configure NEXT_PUBLIC_ALGOLIA_APP_ID + NEXT_PUBLIC_ALGOLIA_SEARCH_KEY to enable search.'
-      );
-    }
-    return stubClient;
+    return medusaSearchClient as unknown as ReturnType<typeof algoliasearch>;
   }
   return algoliasearch(appId, searchKey);
 }

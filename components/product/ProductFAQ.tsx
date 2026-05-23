@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { FAQ } from '@/lib/types';
+import { StrapiBlocks } from '@/components/shared/StrapiBlocks';
 import {
   Accordion,
   AccordionContent,
@@ -20,7 +21,9 @@ export function ProductFAQ({ faqs }: { faqs: FAQ[] }) {
           <AccordionItem key={f.id} value={String(f.id)}>
             <AccordionTrigger>{f.question}</AccordionTrigger>
             <AccordionContent>
-              <p className="leading-relaxed">{f.answer}</p>
+              <div className="leading-relaxed">
+                <StrapiBlocks blocks={f.answer} />
+              </div>
             </AccordionContent>
           </AccordionItem>
         ))}

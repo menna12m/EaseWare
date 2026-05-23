@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getPolicyPage } from '@/lib/api/strapi';
 import { locales } from '@/i18n';
+import { StrapiBlocks } from '@/components/shared/StrapiBlocks';
 
 export const dynamic = 'force-static';
 
@@ -44,18 +45,23 @@ export default async function PolicyPage({
   if (!KNOWN_TYPES.includes(params.type as PolicyType)) notFound();
 
   const page = await getPolicyPage(params.type).catch(() => null);
-  const fallback = FALLBACKS[params.type as PolicyType];
 
   const title = page?.title ?? titleFor(params.type);
-  const body = page?.body ?? fallback;
 
   return (
     <article className="container max-w-2xl py-16">
       <h1 className="font-serif text-4xl text-ink md:text-5xl">{title}</h1>
-      <div
-        className="prose prose-stone mt-8 max-w-none"
-        dangerouslySetInnerHTML={{ __html: body }}
-      />
+      <div className="prose prose-stone mt-8 max-w-none">
+        {page?.body ? (
+          <StrapiBlocks blocks={page.body} />
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: FALLBACKS[params.type as PolicyType] ?? '',
+            }}
+          />
+        )}
+      </div>
     </article>
   );
 }

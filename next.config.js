@@ -14,6 +14,14 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
+      // Strapi local upload provider — served from the CMS during dev.
+      // Replace with your prod Strapi/CDN host before deploying.
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
     ],
   },
   experimental: {

@@ -70,11 +70,13 @@ export type PersonaStory = {
   excerpt: string;
   hero_image: string;
   color_theme?: string;
-  body?: string;
+  // Strapi v4 blocks tree — render with <StrapiBlocks />.
+  body?: unknown;
 };
 
 export type FAQ = {
   id: string | number;
   question: string;
-  answer: string;
+  // Strapi v4 blocks tree.
+  answer: unknown;
 };

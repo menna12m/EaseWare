@@ -20,19 +20,72 @@ type StrapiResponse<T> = { data: StrapiEntity<T>[] | StrapiEntity<T> | null; met
 
 function flattenOne<T>(entity: StrapiEntity<T> | null): (T & { id: number | string }) | null {
   if (!entity) return null;
-  return { id: entity.id, ...(entity.attributes as object) } as T & { id: number | string };
+  return resolveMediaInPlace({ id: entity.id, ...(entity.attributes as object) }) as T & {
+    id: number | string;
+  };
 }
 
 function flattenMany<T>(entities: StrapiEntity<T>[] | null | undefined): Array<T & { id: number | string }> {
   if (!entities) return [];
-  return entities.map((e) => ({ id: e.id, ...(e.attributes as object) }) as T & { id: number | string });
+  return entities.map(
+    (e) => resolveMediaInPlace({ id: e.id, ...(e.attributes as object) }) as T & { id: number | string }
+  );
+}
+
+// Strapi v4 wraps media as `{ data: { id, attributes: { url, ... } } }` and the
+// URL is relative (e.g. `/uploads/foo.jpg`) when using the local provider.
+// This walks the flattened entity and rewrites every media field to an
+// absolute URL string, so the rest of the app can treat it as `string`.
+function resolveMediaInPlace<T extends Record<string, any>>(obj: T): T {
+  for (const key of Object.keys(obj)) {
+    const v = obj[key];
+    if (!v || typeof v !== 'object') continue;
+    // Strapi media wrapper: { data: { attributes: { url } } }
+    const inner = (v as any).data?.attributes ?? (v as any).attributes;
+    if (inner && typeof inner.url === 'string') {
+      (obj as any)[key] = absoluteUrl(inner.url);
+    }
+  }
+  return obj;
+}
+
+function absoluteUrl(url: string): string {
+  if (!url) return url;
+  if (/^https?:\/\//.test(url)) return url;
+  return `${BASE}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
+// ---------- Home page (single type, i18n-localized) ----------
+
+export type HomePage = {
+  id?: number | string;
+  hero_image?: string | null;
+  hero_image_alt?: string | null;
+  hero_eyebrow?: string | null;
+  hero_title?: string | null;
+  hero_body?: string | null;
+  hero_shop_cta?: string | null;
+  hero_story_cta?: string | null;
+};
+
+export async function getHomePage(locale: string = 'en'): Promise<HomePage | null> {
+  try {
+    const res = await strapiFetch<{ data: StrapiEntity<HomePage> | null }>(
+      `/api/home-page?locale=${encodeURIComponent(locale)}&populate[hero_image][fields][0]=url`,
+      { next: { revalidate: 60, tags: ['home', `home:${locale}`] } }
+    );
+    return flattenOne(res.data);
+  } catch {
+    return null;
+  }
 }
 
 // ---------- Persona Stories ----------
 
 export async function getPersonaStories(): Promise<PersonaStory[]> {
+  // Strapi v4 doesn't auto-include relations — populate hero_image explicitly.
   const res = await strapiFetch<StrapiResponse<PersonaStory>>(
-    '/api/persona-stories?fields[0]=slug&fields[1]=name&fields[2]=excerpt&fields[3]=hero_image&fields[4]=color_theme',
+    '/api/persona-stories?fields[0]=slug&fields[1]=name&fields[2]=excerpt&fields[3]=color_theme&populate[hero_image][fields][0]=url',
     { next: { revalidate: 300, tags: ['stories'] } }
   );
   return flattenMany(Array.isArray(res.data) ? res.data : []);

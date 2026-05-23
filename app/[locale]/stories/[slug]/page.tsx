@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { HorizontalProductStrip } from '@/components/shared/HorizontalProductStrip';
 import { getPersonaStories, getPersonaStory } from '@/lib/api/strapi';
 import { getProductsByPersona } from '@/lib/api/medusa';
+import { StrapiBlocks } from '@/components/shared/StrapiBlocks';
 import type { ProductCardModel } from '@/lib/types';
 import { locales } from '@/i18n';
 
@@ -74,7 +75,7 @@ export default async function StoryPage({ params }: { params: Params }) {
       <div className="container py-12">
         {story.body && (
           <div className="prose prose-stone max-w-2xl">
-            <div dangerouslySetInnerHTML={{ __html: story.body }} />
+            <StrapiBlocks blocks={story.body} />
           </div>
         )}
 
