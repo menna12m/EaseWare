@@ -103,9 +103,9 @@ export async function submitReview(
 
 // ─── Wishlist ──────────────────────────────────────────────────────────────
 // Client-side helpers that hit Next.js' /api/wishlist bridge, which forwards
-// to Medusa with a server-minted JWT. The Supabase session is enforced on
-// the bridge side — never call Medusa's /store/wishlist directly from the
-// browser, the JWT must stay server-side.
+// to Medusa with the customer's session cookie. The auth check happens on the
+// bridge side — never call Medusa's /store/wishlist directly from the
+// browser, the customer JWT must stay in an httpOnly cookie.
 
 export async function getWishlist(): Promise<{
   product_ids: string[];
@@ -191,4 +191,99 @@ export async function removeLineItem(
     `/store/carts/${encodeURIComponent(cartId)}/line-items/${encodeURIComponent(lineItemId)}`,
     { method: 'DELETE', cache: 'no-store' }
   );
+}
+
+// ─── Checkout ──────────────────────────────────────────────────────────────
+
+export type ShippingAddress = {
+  first_name: string;
+  last_name: string;
+  phone?: string;
+  address_1: string;
+  address_2?: string;
+  city: string;
+  postal_code?: string;
+  country_code: string;
+  province?: string;
+};
+
+export type ShippingOption = {
+  id: string;
+  name: string;
+  price_type?: string;
+  amount?: number;
+};
+
+export async function updateCart(
+  cartId: string,
+  patch: Record<string, unknown>
+): Promise<{ cart: any }> {
+  return medusaFetch(`/store/carts/${encodeURIComponent(cartId)}`, {
+    method: 'POST',
+    body: JSON.stringify(patch),
+    cache: 'no-store',
+  });
+}
+
+export async function getShippingOptions(
+  cartId: string
+): Promise<{ shipping_options: ShippingOption[] }> {
+  return medusaFetch(
+    `/store/shipping-options?cart_id=${encodeURIComponent(cartId)}`,
+    { cache: 'no-store' }
+  );
+}
+
+export async function addShippingMethod(
+  cartId: string,
+  optionId: string
+): Promise<{ cart: any }> {
+  return medusaFetch(
+    `/store/carts/${encodeURIComponent(cartId)}/shipping-methods`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ option_id: optionId }),
+      cache: 'no-store',
+    }
+  );
+}
+
+export async function createPaymentCollection(
+  cartId: string
+): Promise<{ payment_collection: { id: string } }> {
+  return medusaFetch(`/store/payment-collections`, {
+    method: 'POST',
+    body: JSON.stringify({ cart_id: cartId }),
+    cache: 'no-store',
+  });
+}
+
+export async function initializePaymentSession(
+  paymentCollectionId: string,
+  providerId = 'pp_system_default'
+): Promise<{ payment_collection: any }> {
+  return medusaFetch(
+    `/store/payment-collections/${encodeURIComponent(paymentCollectionId)}/payment-sessions`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ provider_id: providerId }),
+      cache: 'no-store',
+    }
+  );
+}
+
+export async function completeCart(
+  cartId: string
+): Promise<{ type: 'order' | 'cart'; order?: any; cart?: any }> {
+  return medusaFetch(`/store/carts/${encodeURIComponent(cartId)}/complete`, {
+    method: 'POST',
+    body: '{}',
+    cache: 'no-store',
+  });
+}
+
+export async function getOrder(orderId: string): Promise<{ order: any }> {
+  return medusaFetch(`/store/orders/${encodeURIComponent(orderId)}`, {
+    cache: 'no-store',
+  });
 }

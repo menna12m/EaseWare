@@ -1,29 +1,12 @@
 import { NextResponse } from 'next/server';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { mintMedusaCustomerJwt } from '@/lib/medusa/auth';
-import { MEDUSA_URL, MEDUSA_PUBLISHABLE_KEY } from '@/lib/medusa/client';
+import { customerFetch } from '@/lib/medusa/session';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const supabase = createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
+  const { data, status } = await customerFetch('/store/wishlist');
+  if (status === 401 || !data) {
     return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
   }
-
-  const token = mintMedusaCustomerJwt(user.id);
-  const res = await fetch(`${MEDUSA_URL}/store/wishlist`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'x-publishable-api-key': MEDUSA_PUBLISHABLE_KEY,
-    },
-    cache: 'no-store',
-  });
-
-  const body = await res.json().catch(() => ({}));
-  return NextResponse.json(body, { status: res.status });
+  return NextResponse.json(data, { status });
 }

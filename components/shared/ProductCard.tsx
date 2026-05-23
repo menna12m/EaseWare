@@ -15,7 +15,7 @@ type ProductCardProps = {
 
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const isWishlisted = useWishlistStore((s) => s.productIds.includes(product.id));
-  const toggle = useWishlistStore((s) => s.toggle);
+  const toggle = useWishlistStore((s) => s.toggleEverywhere);
 
   return (
     <Link
