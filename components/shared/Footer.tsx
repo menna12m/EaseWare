@@ -1,48 +1,47 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/lib/i18n/routing';
 import { Instagram, Facebook, Mail } from 'lucide-react';
 
-const FOOTER_LINKS = [
-  {
-    title: 'Shop',
-    links: [
-      { label: 'All products', href: '/shop' },
-      { label: 'Women', href: '/shop?category=women' },
-      { label: 'Kids', href: '/shop?category=kids' },
-      { label: 'Capsules', href: '/shop?product_type=capsule' },
-      { label: 'Sets', href: '/shop?product_type=set' },
-    ],
-  },
-  {
-    title: 'Care',
-    links: [
-      { label: 'Size guide', href: '/size-guide' },
-      { label: 'Shipping', href: '/policies/shipping' },
-      { label: 'Returns', href: '/policies/returns' },
-      { label: 'FAQ', href: '/policies/faq' },
-    ],
-  },
-  {
-    title: 'About',
-    links: [
-      { label: 'Our story', href: '/about' },
-      { label: 'Personas', href: '/#stories' },
-      { label: 'Reviews', href: '/reviews' },
-      { label: 'Contact', href: '/policies/contact' },
-    ],
-  },
-];
-
 export function Footer() {
+  const t = useTranslations('Footer');
+  const cols = [
+    {
+      title: t('shop'),
+      links: [
+        { label: t('links.allProducts'), href: '/shop' },
+        { label: t('links.women'), href: '/shop?category=women' },
+        { label: t('links.kids'), href: '/shop?category=kids' },
+        { label: t('links.capsules'), href: '/shop?product_type=capsule' },
+        { label: t('links.sets'), href: '/shop?product_type=set' },
+      ],
+    },
+    {
+      title: t('care'),
+      links: [
+        { label: t('links.sizeGuide'), href: '/size-guide' },
+        { label: t('links.shipping'), href: '/policies/shipping' },
+        { label: t('links.returns'), href: '/policies/returns' },
+        { label: t('links.faq'), href: '/policies/faq' },
+      ],
+    },
+    {
+      title: t('about'),
+      links: [
+        { label: t('links.ourStory'), href: '/about' },
+        { label: t('links.personas'), href: '/#stories' },
+        { label: t('links.reviews'), href: '/reviews' },
+        { label: t('links.contact'), href: '/policies/contact' },
+      ],
+    },
+  ];
+
   return (
     <footer className="mt-24 border-t border-ink/10 bg-vanilla">
       <div className="container py-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
             <p className="font-serif text-2xl text-ink">easewear</p>
-            <p className="mt-3 max-w-xs text-sm text-ink-soft">
-              Comfort-wear designed for every woman&rsquo;s body, day, and mood.
-              Made in Egypt, worn everywhere.
-            </p>
+            <p className="mt-3 max-w-xs text-sm text-ink-soft">{t('tagline')}</p>
             <div className="mt-5 flex items-center gap-3">
               <a
                 href="https://instagram.com/easewear"
@@ -68,7 +67,7 @@ export function Footer() {
             </div>
           </div>
 
-          {FOOTER_LINKS.map((col) => (
+          {cols.map((col) => (
             <div key={col.title}>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-ink">{col.title}</h3>
               <ul className="mt-4 space-y-2">
@@ -85,10 +84,10 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-2 border-t border-ink/10 pt-6 text-xs text-ink-soft sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Easewear. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Easewear. {t('rights')}</p>
           <div className="flex gap-4">
-            <Link href="/policies/privacy" className="hover:text-ink">Privacy</Link>
-            <Link href="/policies/terms" className="hover:text-ink">Terms</Link>
+            <Link href="/policies/privacy" className="hover:text-ink">{t('links.privacy')}</Link>
+            <Link href="/policies/terms" className="hover:text-ink">{t('links.terms')}</Link>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/lib/i18n/routing';
 import { Heart, Minus, Plus, Truck } from 'lucide-react';
 import type { Product, ProductVariant } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -40,6 +41,7 @@ function parseVariant(v: ProductVariant): { color?: string; size?: string } {
 }
 
 export function ProductPurchasePanel({ product }: Props) {
+  const t = useTranslations('Product');
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -134,11 +136,11 @@ export function ProductPurchasePanel({ product }: Props) {
       {colors.length > 0 && (
         <div>
           <label className="mb-2 block text-sm font-medium text-ink">
-            Color: <span className="font-normal text-ink-soft">{selectedColor}</span>
+            {t('color')}: <span className="font-normal text-ink-soft">{selectedColor}</span>
           </label>
           <Select value={selectedColor} onValueChange={setSelectedColor}>
             <SelectTrigger>
-              <SelectValue placeholder="Choose a color" />
+              <SelectValue placeholder={t('color')} />
             </SelectTrigger>
             <SelectContent>
               {colors.map((c) => {
@@ -166,13 +168,13 @@ export function ProductPurchasePanel({ product }: Props) {
         <div>
           <div className="mb-2 flex items-center justify-between">
             <label className="block text-sm font-medium text-ink">
-              Size: <span className="font-normal text-ink-soft">{selectedSize}</span>
+              {t('size')}: <span className="font-normal text-ink-soft">{selectedSize}</span>
             </label>
             <SizeGuideSheet />
           </div>
           <Select value={selectedSize} onValueChange={setSelectedSize}>
             <SelectTrigger>
-              <SelectValue placeholder="Choose a size" />
+              <SelectValue placeholder={t('size')} />
             </SelectTrigger>
             <SelectContent>
               {sizesForColor.map((s) => (
@@ -186,11 +188,11 @@ export function ProductPurchasePanel({ product }: Props) {
       )}
 
       <div>
-        <label className="mb-2 block text-sm font-medium text-ink">Quantity</label>
+        <label className="mb-2 block text-sm font-medium text-ink">{t('quantity')}</label>
         <div className="inline-flex items-center rounded-md border border-ink/20">
           <button
             type="button"
-            aria-label="Decrease"
+            aria-label={t('quantity')}
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             className="flex h-11 w-11 items-center justify-center hover:bg-cream-100"
           >
@@ -199,7 +201,7 @@ export function ProductPurchasePanel({ product }: Props) {
           <span className="w-12 text-center text-sm">{qty}</span>
           <button
             type="button"
-            aria-label="Increase"
+            aria-label={t('quantity')}
             onClick={() => setQty((q) => q + 1)}
             className="flex h-11 w-11 items-center justify-center hover:bg-cream-100"
           >
@@ -210,14 +212,14 @@ export function ProductPurchasePanel({ product }: Props) {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button variant="default" size="lg" disabled={isPending} onClick={() => handleAdd(false)} className="flex-1">
-          {isPending ? 'Adding…' : 'Add to bag'}
+          {isPending ? t('adding') : t('addToBag')}
         </Button>
         <Button variant="clay" size="lg" disabled={isPending} onClick={() => handleAdd(true)} className="flex-1">
-          Buy now
+          {t('buyNow')}
         </Button>
         <button
           type="button"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={isWishlisted ? t('removeFromWishlist') : t('addToWishlist')}
           onClick={() => toggleWishlist(product.id)}
           className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-ink/20 hover:bg-cream-100"
         >
@@ -228,7 +230,7 @@ export function ProductPurchasePanel({ product }: Props) {
       <div className="flex items-center justify-between gap-3">
         <div className="inline-flex items-center gap-2 text-xs text-ink-soft">
           <Truck className="h-4 w-4" />
-          Free shipping on orders over EGP 2,000
+          {t('freeShipping')}
         </div>
         <ShareWidget url={shareUrl} title={product.title} />
       </div>

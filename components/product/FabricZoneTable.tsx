@@ -8,7 +8,7 @@ export function FabricZoneTable({ zones }: Props) {
     <div className="overflow-hidden rounded-lg border border-ink/10">
       <table className="w-full border-collapse text-sm">
         <thead className="bg-vanilla">
-          <tr className="text-left">
+          <tr className="text-start">
             <th className="px-4 py-3 font-medium text-ink">Zone</th>
             <th className="px-4 py-3 font-medium text-ink">Fabric</th>
             <th className="px-4 py-3 font-medium text-ink">Properties</th>

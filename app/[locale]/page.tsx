@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import { Hero } from '@/components/home/Hero';
 import { PersonaCardGrid } from '@/components/home/PersonaCardGrid';
 import { BrandValuesStrip } from '@/components/home/BrandValuesStrip';
@@ -37,7 +38,9 @@ async function loadHomeData() {
   return { personaStories, featured };
 }
 
-export default async function HomePage() {
+export default async function HomePage({ params: { locale } }: { params: { locale: string } }) {
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations('Featured');
   const { personaStories, featured } = await loadHomeData();
 
   return (
@@ -46,7 +49,7 @@ export default async function HomePage() {
       <PersonaCardGrid stories={personaStories} />
       {featured.length > 0 && (
         <div className="container">
-          <HorizontalProductStrip title="Just dropped" products={featured} />
+          <HorizontalProductStrip title={t('title')} products={featured} />
         </div>
       )}
       <BrandValuesStrip />

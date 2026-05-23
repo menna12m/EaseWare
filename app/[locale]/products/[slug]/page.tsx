@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import { ProductGallery } from '@/components/product/ProductGallery';
 import { ProductPurchasePanel } from '@/components/product/ProductPurchasePanel';
 import { FabricZoneTable } from '@/components/product/FabricZoneTable';
@@ -14,7 +15,7 @@ import type { ProductCardModel } from '@/lib/types';
 
 export const revalidate = 30;
 
-type Params = { slug: string };
+type Params = { slug: string; locale: string };
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   try {
@@ -34,6 +35,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 export default async function ProductPage({ params }: { params: Params }) {
+  unstable_setRequestLocale(params.locale);
+  const t = await getTranslations('Product');
   let product;
   try {
     ({ product } = await getProductByHandle(params.slug));
@@ -80,11 +83,11 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       <div className="mt-12 grid gap-8 lg:grid-cols-2">
         <div>
-          <h2 className="mb-4 font-serif text-2xl text-ink">Fabric zones</h2>
+          <h2 className="mb-4 font-serif text-2xl text-ink">{t('fabricZones')}</h2>
           <FabricZoneTable zones={product.metadata?.fabric_zones ?? defaultZones} />
         </div>
         <div>
-          <h2 className="mb-4 font-serif text-2xl text-ink">Care</h2>
+          <h2 className="mb-4 font-serif text-2xl text-ink">{t('care')}</h2>
           <WashingCare instructions={product.metadata?.washing_care} />
         </div>
       </div>
@@ -100,7 +103,7 @@ export default async function ProductPage({ params }: { params: Params }) {
       <ReviewSection productId={product.id} initialReviews={reviews} />
 
       {similarProducts.length > 0 && (
-        <HorizontalProductStrip title="You may also love" products={similarProducts} />
+        <HorizontalProductStrip title={t('alsoLove')} products={similarProducts} />
       )}
 
       <LastViewedStrip />

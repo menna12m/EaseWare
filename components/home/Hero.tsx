@@ -1,28 +1,27 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/lib/i18n/routing';
 import { Button } from '@/components/ui/button';
 
 export function Hero() {
+  const t = useTranslations('Hero');
   return (
     <section className="relative">
       <div className="container grid items-center gap-10 py-12 md:grid-cols-2 md:py-20">
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-clay-dark">
-            Comfort-wear, made in Egypt
+            {t('eyebrow')}
           </p>
           <h1 className="mt-4 font-serif text-4xl leading-tight text-ink md:text-6xl">
-            The softest thing you&rsquo;ll wear today.
+            {t('title')}
           </h1>
-          <p className="mt-4 max-w-md text-base text-ink-soft md:text-lg">
-            Easewear is built for the women who do everything — and want to feel like
-            themselves while doing it. Layer it, live in it, love it.
-          </p>
+          <p className="mt-4 max-w-md text-base text-ink-soft md:text-lg">{t('body')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild variant="clay" size="lg">
-              <Link href="/shop">Shop the collection</Link>
+              <Link href="/shop">{t('shopCta')}</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="#stories">By story</Link>
+              <Link href={{ pathname: '/', hash: 'stories' }}>{t('storyCta')}</Link>
             </Button>
           </div>
         </div>

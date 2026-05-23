@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Review } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export function ReviewSection({ productId, initialReviews }: Props) {
+  const t = useTranslations('Product');
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
@@ -68,38 +70,38 @@ export function ReviewSection({ productId, initialReviews }: Props) {
     <section className="mt-12">
       <div className="flex items-end justify-between gap-4 border-b border-ink/10 pb-4">
         <div>
-          <h2 className="font-serif text-2xl text-ink md:text-3xl">Customer reviews</h2>
+          <h2 className="font-serif text-2xl text-ink md:text-3xl">{t('reviews')}</h2>
           <div className="mt-2 flex items-center gap-3">
             <StarRating rating={stats.avg} size={18} />
             <span className="text-sm text-ink-soft">
-              {stats.avg.toFixed(1)} · {stats.total} {stats.total === 1 ? 'review' : 'reviews'}
+              {stats.avg.toFixed(1)} · {stats.total}
             </span>
           </div>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Write a review</Button>
+            <Button variant="outline">{t('writeReview')}</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Share your experience</DialogTitle>
+              <DialogTitle>{t('shareExperience')}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
-                placeholder="Your name"
+                placeholder={t('yourName')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
               <div>
-                <label className="mb-2 block text-sm text-ink">Rating</label>
+                <label className="mb-2 block text-sm text-ink">{t('rating')}</label>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button
                       key={n}
                       type="button"
                       onClick={() => setRating(n)}
-                      aria-label={`${n} star${n === 1 ? '' : 's'}`}
+                      aria-label={`${n}`}
                       className="p-1"
                     >
                       <StarRating rating={n <= rating ? 1 : 0} outOf={1} size={26} />
@@ -108,14 +110,14 @@ export function ReviewSection({ productId, initialReviews }: Props) {
                 </div>
               </div>
               <Textarea
-                placeholder="What did you love? How does it fit?"
+                placeholder={t('reviewPlaceholder')}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 rows={4}
                 required
               />
               <Button type="submit" variant="clay" disabled={submitting} className="w-full">
-                {submitting ? 'Submitting…' : 'Submit review'}
+                {submitting ? t('submitting') : t('submit')}
               </Button>
             </form>
           </DialogContent>
@@ -133,7 +135,7 @@ export function ReviewSection({ productId, initialReviews }: Props) {
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-cream-100">
                   <div className="h-full bg-clay transition-all" style={{ width: `${pct}%` }} />
                 </div>
-                <span className="w-10 text-right text-ink-soft">{count}</span>
+                <span className="w-10 text-end text-ink-soft">{count}</span>
               </div>
             );
           })}
@@ -142,7 +144,7 @@ export function ReviewSection({ productId, initialReviews }: Props) {
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {reviews.length === 0 ? (
-          <p className="text-sm text-ink-soft">Be the first to review this piece.</p>
+          <p className="text-sm text-ink-soft">{t('noReviews')}</p>
         ) : (
           reviews.map((r) => <ReviewCard key={r.id} review={r} />)
         )}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Ruler } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
@@ -17,34 +18,38 @@ type Props = {
 };
 
 export function SizeGuideSheet({ category = 'women', chart }: Props) {
+  const t = useTranslations('SizeGuide');
+  const tNav = useTranslations('Nav');
   const rows = chart ?? DEFAULT_CHART;
   return (
     <Sheet>
       <SheetTrigger className="inline-flex items-center gap-1 text-sm text-ink-soft underline-offset-4 hover:text-ink hover:underline">
         <Ruler className="h-3.5 w-3.5" />
-        Size guide
+        {tNav('sizeGuide')}
       </SheetTrigger>
       <SheetContent side="right" className="w-full overflow-y-auto p-0 sm:max-w-md">
         <SheetHeader>
-          <SheetTitle>Size guide — {category === 'women' ? 'Women' : 'Kids'}</SheetTitle>
-          <p className="text-sm text-ink-soft">All measurements in centimeters. If in doubt, size up — easewear runs true.</p>
+          <SheetTitle>
+            {tNav('sizeGuide')} — {category === 'women' ? t('women') : t('kids')}
+          </SheetTitle>
+          <p className="text-sm text-ink-soft">{t('intro')}</p>
         </SheetHeader>
         <div className="p-6">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="border-b border-ink/15 text-left">
-                <th className="py-2 pr-3 font-medium text-ink">Size</th>
-                <th className="py-2 pr-3 font-medium text-ink">Bust</th>
-                <th className="py-2 pr-3 font-medium text-ink">Waist</th>
-                <th className="py-2 font-medium text-ink">Hip</th>
+              <tr className="border-b border-ink/15 text-start">
+                <th className="py-2 pe-3 font-medium text-ink">{t('headers.size')}</th>
+                <th className="py-2 pe-3 font-medium text-ink">{t('headers.bust')}</th>
+                <th className="py-2 pe-3 font-medium text-ink">{t('headers.waist')}</th>
+                <th className="py-2 font-medium text-ink">{t('headers.hip')}</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.size} className="border-b border-ink/5 last:border-b-0">
-                  <td className="py-2.5 pr-3 font-medium">{r.size}</td>
-                  <td className="py-2.5 pr-3 text-ink-soft">{r.bust ?? '—'}</td>
-                  <td className="py-2.5 pr-3 text-ink-soft">{r.waist ?? '—'}</td>
+                  <td className="py-2.5 pe-3 font-medium">{r.size}</td>
+                  <td className="py-2.5 pe-3 text-ink-soft">{r.bust ?? '—'}</td>
+                  <td className="py-2.5 pe-3 text-ink-soft">{r.waist ?? '—'}</td>
                   <td className="py-2.5 text-ink-soft">{r.hip ?? '—'}</td>
                 </tr>
               ))}
@@ -52,9 +57,7 @@ export function SizeGuideSheet({ category = 'women', chart }: Props) {
           </table>
 
           <div className="mt-6 rounded-lg bg-vanilla p-4 text-sm text-ink-soft">
-            <strong className="text-ink">How to measure:</strong> wrap a soft tape around
-            the fullest part of your bust, the narrowest part of your waist, and the
-            widest part of your hips. Keep the tape level and snug, not tight.
+            <strong className="text-ink">{t('howTo.title')}:</strong> {t('howTo.bust')}
           </div>
         </div>
       </SheetContent>

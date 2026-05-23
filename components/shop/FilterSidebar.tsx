@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useRefinementList, useClearRefinements, useCurrentRefinements } from 'react-instantsearch';
 import {
   Accordion,
@@ -42,7 +43,7 @@ function RefinementSection({ attribute, title, layout = 'list', limit = 12 }: Re
                   <span className={item.isRefined ? 'text-ink' : 'text-ink-soft'}>
                     {item.label}
                   </span>
-                  <span className="ml-auto text-xs text-ink-soft">({item.count})</span>
+                  <span className="ms-auto text-xs text-ink-soft">({item.count})</span>
                 </label>
               </li>
             ))}
@@ -115,6 +116,7 @@ function colorNameToHex(name: string): string {
 }
 
 export function FilterSidebar() {
+  const t = useTranslations('Shop');
   const { items: activeItems } = useCurrentRefinements();
   const { refine: clearAll } = useClearRefinements();
   const activeCount = activeItems.reduce((acc, group) => acc + group.refinements.length, 0);
@@ -123,10 +125,10 @@ export function FilterSidebar() {
     <aside className="w-full md:w-[280px] md:shrink-0">
       <div className="sticky top-24">
         <div className="flex items-center justify-between border-b border-ink/10 pb-3">
-          <h2 className="font-serif text-lg text-ink">Filters</h2>
+          <h2 className="font-serif text-lg text-ink">{t('filters')}</h2>
           {activeCount > 0 && (
             <Button variant="link" size="sm" onClick={() => clearAll()} className="h-auto p-0 text-xs">
-              Clear all ({activeCount})
+              {t('clearAll')} ({activeCount})
             </Button>
           )}
         </div>
@@ -136,14 +138,14 @@ export function FilterSidebar() {
           defaultValue={['category', 'product_type', 'persona_tags', 'sizes', 'colors']}
           className="mt-2"
         >
-          <RefinementSection attribute="category" title="Category" />
-          <RefinementSection attribute="product_type" title="Product type" />
-          <RefinementSection attribute="persona_tags" title="By persona" />
-          <RefinementSection attribute="sizes" title="Size" layout="pills" />
-          <RefinementSection attribute="colors" title="Color" layout="swatches" />
-          <RefinementSection attribute="fabric_front" title="Fabric — front body" />
-          <RefinementSection attribute="fabric_back" title="Fabric — back body" />
-          <RefinementSection attribute="fabric_lining" title="Fabric — inner lining" />
+          <RefinementSection attribute="category" title={t('category')} />
+          <RefinementSection attribute="product_type" title={t('productType')} />
+          <RefinementSection attribute="persona_tags" title={t('persona')} />
+          <RefinementSection attribute="sizes" title={t('size')} layout="pills" />
+          <RefinementSection attribute="colors" title={t('color')} layout="swatches" />
+          <RefinementSection attribute="fabric_front" title={t('fabricFront')} />
+          <RefinementSection attribute="fabric_back" title={t('fabricBack')} />
+          <RefinementSection attribute="fabric_lining" title={t('fabricLining')} />
         </Accordion>
       </div>
     </aside>
@@ -155,7 +157,7 @@ export function ActiveFilterCount() {
   const count = items.reduce((acc, group) => acc + group.refinements.length, 0);
   if (count === 0) return null;
   return (
-    <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-clay px-1.5 text-[10px] font-medium text-cream-50">
+    <span className="ms-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-clay px-1.5 text-[10px] font-medium text-cream-50">
       {count}
     </span>
   );

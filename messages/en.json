@@ -1,0 +1,229 @@
+{
+  "Nav": {
+    "women": "Women",
+    "kids": "Kids",
+    "ourStory": "Our Story",
+    "sizeGuide": "Size Guide",
+    "search": "Search",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "account": "Account",
+    "home": "Easewear home"
+  },
+  "Cart": {
+    "title": "Your bag",
+    "empty": "Your bag is empty — find something soft.",
+    "emptyHint": "Nothing here yet.",
+    "browse": "Browse the shop",
+    "subtotal": "Subtotal",
+    "taxNote": "Shipping & taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "pieceOne": "1 piece",
+    "pieceOther": "{count} pieces",
+    "remove": "Remove",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity"
+  },
+  "Hero": {
+    "eyebrow": "Comfort-wear, made in Egypt",
+    "title": "The softest thing you'll wear today.",
+    "body": "Easewear is built for the women who do everything — and want to feel like themselves while doing it. Layer it, live in it, love it.",
+    "shopCta": "Shop the collection",
+    "storyCta": "By story"
+  },
+  "Stories": {
+    "eyebrow": "Shop by story",
+    "title": "Made for how you live, not how you're shaped."
+  },
+  "BrandValues": {
+    "fabric": {
+      "title": "Fabric quality",
+      "body": "Modal, cotton, bamboo. Sourced for softness, tested for the long haul."
+    },
+    "fit": {
+      "title": "Perfect fit",
+      "body": "Designed on real bodies, in five sizes that actually fit five different women."
+    },
+    "conscious": {
+      "title": "Conscious comfort",
+      "body": "Made locally in small runs. Less waste, more pieces you reach for daily."
+    }
+  },
+  "Featured": {
+    "title": "Just dropped"
+  },
+  "Shop": {
+    "title": "The shop",
+    "subtitle": "Filter by story, fabric, fit. Everything in stock, ships from Cairo.",
+    "filters": "Filters",
+    "clearAll": "Clear all",
+    "category": "Category",
+    "productType": "Product type",
+    "persona": "By persona",
+    "size": "Size",
+    "color": "Color",
+    "fabricFront": "Fabric — front body",
+    "fabricBack": "Fabric — back body",
+    "fabricLining": "Fabric — inner lining",
+    "noResults": "No pieces match those filters yet — try loosening one.",
+    "endOfResults": "You've seen it all.",
+    "loading": "Loading…",
+    "tabs": {
+      "women": "Women",
+      "kids": "Kids",
+      "capsules": "Capsules",
+      "sets": "Sets",
+      "byStory": "By story"
+    }
+  },
+  "Product": {
+    "color": "Color",
+    "size": "Size",
+    "sizeGuide": "Size guide",
+    "quantity": "Quantity",
+    "addToBag": "Add to bag",
+    "adding": "Adding…",
+    "buyNow": "Buy now",
+    "addToWishlist": "Add to wishlist",
+    "removeFromWishlist": "Remove from wishlist",
+    "share": "Share",
+    "linkCopied": "Link copied",
+    "freeShipping": "Free shipping on orders over EGP 2,000",
+    "fabricZones": "Fabric zones",
+    "care": "Care",
+    "faq": "Questions, answered",
+    "reviews": "Customer reviews",
+    "alsoLove": "You may also love",
+    "recentlyViewed": "Recently viewed",
+    "writeReview": "Write a review",
+    "shareExperience": "Share your experience",
+    "yourName": "Your name",
+    "rating": "Rating",
+    "reviewPlaceholder": "What did you love? How does it fit?",
+    "submit": "Submit review",
+    "submitting": "Submitting…",
+    "noReviews": "Be the first to review this piece."
+  },
+  "Sizes": {
+    "wash": {
+      "title": "Wash & care",
+      "items": {
+        "cold": "Machine wash cold (30°C)",
+        "noBleach": "Do not bleach",
+        "tumble": "Tumble dry low",
+        "iron": "Iron on low heat"
+      }
+    }
+  },
+  "SizeGuide": {
+    "eyebrow": "Size guide",
+    "title": "Find your easewear fit.",
+    "intro": "Our sizing is true and slightly generous through the waist. If you're between sizes, size down for fitted pieces (capsules) and up for relaxed sets.",
+    "women": "Women",
+    "kids": "Kids",
+    "headers": {
+      "size": "Size",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hip": "Hip",
+      "chest": "Chest",
+      "height": "Height"
+    },
+    "howTo": {
+      "title": "How to measure",
+      "bust": "Bust: around the fullest part, keeping the tape level.",
+      "waist": "Waist: the narrowest point, usually above the navel.",
+      "hip": "Hip: around the widest part, about 20 cm below the waist."
+    }
+  },
+  "About": {
+    "story": {
+      "eyebrow": "Our story",
+      "title": "We started easewear because comfort had become a compromise.",
+      "body": "The pieces that felt the best — modal, cotton, bamboo — were rarely the pieces that fit. So we started designing on real bodies in Cairo, and we built a brand for the days women actually live: school runs, board rooms, prayer mats, gym mats, plane seats, the in-between."
+    },
+    "vision": {
+      "eyebrow": "Vision",
+      "title": "A world where what you wear at home is also what you want to wear out."
+    },
+    "mission": {
+      "eyebrow": "Mission",
+      "title": "Make every woman feel like herself, in every layer.",
+      "body": "We size for real bodies, we stitch in Egypt, and we choose fabrics for how they feel after the third wash, not the first. Smaller drops, fewer returns, more loved pieces."
+    },
+    "values": {
+      "eyebrow": "Values",
+      "title": "What we hold close.",
+      "softness": { "title": "Softness, always", "body": "Fabric chosen for the long haul, not the photograph. Modal, cotton, bamboo." },
+      "realFit": { "title": "Real fit", "body": "Designed on five different bodies, sampled until the fit holds across them." },
+      "localHands": { "title": "Local hands", "body": "Made in Cairo, in small runs, by people who get paid the way they should." }
+    }
+  },
+  "Reviews": {
+    "eyebrow": "Reviews",
+    "title": "{count} women, in their own words.",
+    "average": "{rating} average across the collection",
+    "empty": "No reviews yet — be the first."
+  },
+  "Footer": {
+    "tagline": "Comfort-wear designed for every woman's body, day, and mood. Made in Egypt, worn everywhere.",
+    "shop": "Shop",
+    "care": "Care",
+    "about": "About",
+    "links": {
+      "allProducts": "All products",
+      "women": "Women",
+      "kids": "Kids",
+      "capsules": "Capsules",
+      "sets": "Sets",
+      "sizeGuide": "Size guide",
+      "shipping": "Shipping",
+      "returns": "Returns",
+      "faq": "FAQ",
+      "ourStory": "Our story",
+      "personas": "Personas",
+      "reviews": "Reviews",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "rights": "All rights reserved."
+  },
+  "Account": {
+    "eyebrow": "My account",
+    "welcome": "Welcome back, {name}.",
+    "orders": "Orders",
+    "wishlist": "Wishlist",
+    "signOut": "Sign out",
+    "orderHistory": "Order history",
+    "noOrders": "You haven't placed an order yet.",
+    "noWishlist": "Nothing saved yet. Tap the heart on any piece to add it here."
+  },
+  "Login": {
+    "title": "Welcome back.",
+    "subtitle": "Sign in to track orders and your wishlist.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "newHere": "New here?",
+    "createAccount": "Create an account",
+    "notConfigured": "Auth is not configured yet. Add Supabase credentials to .env.local."
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Page not found",
+    "body": "That page seems to have wandered off. Let's get you back to something soft.",
+    "back": "Back to home"
+  },
+  "Error": {
+    "title": "Something soft got tangled.",
+    "body": "We've been notified. Try again, or head back home.",
+    "retry": "Try again"
+  },
+  "Language": {
+    "switch": "Language",
+    "en": "English",
+    "ar": "العربية"
+  }
+}

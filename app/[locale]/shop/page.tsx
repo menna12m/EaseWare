@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import { ShopProvider } from '@/components/shop/ShopProvider';
 import { FilterSidebar } from '@/components/shop/FilterSidebar';
 import { ProductGrid } from '@/components/shop/ProductGrid';
@@ -40,17 +41,23 @@ function uiStateFromQuery(params: SearchParams) {
   return { [ALGOLIA_INDEX]: { refinementList: remapped } };
 }
 
-export default function ShopPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function ShopPage({
+  params: { locale },
+  searchParams,
+}: {
+  params: { locale: string };
+  searchParams: SearchParams;
+}) {
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations('Shop');
   const initialUiState = uiStateFromQuery(searchParams);
 
   return (
     <ShopProvider initialUiState={initialUiState}>
       <div className="container py-8">
         <header className="mb-6">
-          <h1 className="font-serif text-3xl text-ink md:text-4xl">The shop</h1>
-          <p className="mt-1 text-sm text-ink-soft">
-            Filter by story, fabric, fit. Everything in stock, ships from Cairo.
-          </p>
+          <h1 className="font-serif text-3xl text-ink md:text-4xl">{t('title')}</h1>
+          <p className="mt-1 text-sm text-ink-soft">{t('subtitle')}</p>
         </header>
 
         <div className="mb-6 flex items-center justify-between gap-3">
@@ -62,7 +69,7 @@ export default function ShopPage({ searchParams }: { searchParams: SearchParams 
           <div className="hidden md:block">
             <FilterSidebar />
           </div>
-          <Suspense fallback={<div className="flex-1 text-sm text-ink-soft">Loading…</div>}>
+          <Suspense fallback={<div className="flex-1 text-sm text-ink-soft">{t('loading')}</div>}>
             <ProductGrid />
           </Suspense>
         </div>

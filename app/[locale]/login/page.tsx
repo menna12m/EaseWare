@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Link, useRouter } from '@/lib/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
+  const t = useTranslations('Login');
   const router = useRouter();
   const params = useSearchParams();
   const redirectTo = params.get('redirectTo') || '/account';
@@ -19,7 +21,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      setErr('Auth is not configured yet. Add Supabase credentials to .env.local.');
+      setErr(t('notConfigured'));
       return;
     }
     setBusy(true);
@@ -31,20 +33,23 @@ export default function LoginPage() {
       setBusy(false);
       return;
     }
-    router.push(redirectTo);
+    // redirectTo may already include /[locale] from the middleware redirect;
+    // strip if so to let next-intl re-prefix.
+    const path = redirectTo.replace(/^\/(en|ar)/, '') || '/account';
+    router.push(path);
     router.refresh();
   };
 
   return (
     <div className="container max-w-md py-20">
-      <h1 className="font-serif text-3xl text-ink">Welcome back.</h1>
-      <p className="mt-2 text-sm text-ink-soft">Sign in to track orders and your wishlist.</p>
+      <h1 className="font-serif text-3xl text-ink">{t('title')}</h1>
+      <p className="mt-2 text-sm text-ink-soft">{t('subtitle')}</p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-        <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input type="email" placeholder={t('email')} value={email} onChange={(e) => setEmail(e.target.value)} required />
         <Input
           type="password"
-          placeholder="Password"
+          placeholder={t('password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -52,14 +57,14 @@ export default function LoginPage() {
         />
         {err && <p className="text-sm text-destructive">{err}</p>}
         <Button type="submit" variant="clay" size="lg" disabled={busy} className="w-full">
-          {busy ? 'Signing in…' : 'Sign in'}
+          {busy ? t('submitting') : t('submit')}
         </Button>
       </form>
 
       <p className="mt-6 text-sm text-ink-soft">
-        New here?{' '}
+        {t('newHere')}{' '}
         <Link href="/signup" className="font-medium text-ink hover:underline">
-          Create an account
+          {t('createAccount')}
         </Link>
       </p>
     </div>

@@ -2,8 +2,9 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
+import { Link } from '@/lib/i18n/routing';
 import type { PersonaStory } from '@/lib/types';
 
 const container = {
@@ -29,6 +30,7 @@ const FALLBACK_STORIES: PersonaStory[] = [
 ];
 
 export function PersonaCardGrid({ stories }: { stories?: PersonaStory[] }) {
+  const t = useTranslations('Stories');
   const data = stories && stories.length > 0 ? stories : FALLBACK_STORIES;
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
@@ -37,10 +39,8 @@ export function PersonaCardGrid({ stories }: { stories?: PersonaStory[] }) {
     <section id="stories" className="container my-16">
       <div className="mb-8 flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-clay">Shop by story</p>
-          <h2 className="mt-1 font-serif text-3xl text-ink md:text-4xl">
-            Made for how you live, not how you&rsquo;re shaped.
-          </h2>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-clay">{t('eyebrow')}</p>
+          <h2 className="mt-1 font-serif text-3xl text-ink md:text-4xl">{t('title')}</h2>
         </div>
       </div>
 

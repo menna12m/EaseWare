@@ -1,17 +1,24 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import { getPolicyPage } from '@/lib/api/strapi';
+import { locales } from '@/i18n';
 
 export const dynamic = 'force-static';
 
 const KNOWN_TYPES = ['shipping', 'returns', 'privacy', 'terms', 'faq', 'contact'] as const;
 type PolicyType = (typeof KNOWN_TYPES)[number];
 
+// Cross-product of locales × policy types.
 export function generateStaticParams() {
-  return KNOWN_TYPES.map((type) => ({ type }));
+  return locales.flatMap((locale) => KNOWN_TYPES.map((type) => ({ type, locale })));
 }
 
-export async function generateMetadata({ params }: { params: { type: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { type: string; locale: string };
+}): Promise<Metadata> {
   const title = titleFor(params.type);
   return { title };
 }
@@ -28,7 +35,12 @@ function titleFor(type: string) {
   return map[type] ?? 'Policy';
 }
 
-export default async function PolicyPage({ params }: { params: { type: string } }) {
+export default async function PolicyPage({
+  params,
+}: {
+  params: { type: string; locale: string };
+}) {
+  unstable_setRequestLocale(params.locale);
   if (!KNOWN_TYPES.includes(params.type as PolicyType)) notFound();
 
   const page = await getPolicyPage(params.type).catch(() => null);

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { useInfiniteHits } from 'react-instantsearch';
 import { ProductCard } from '@/components/shared/ProductCard';
 import type { ProductCardModel } from '@/lib/types';
@@ -18,6 +19,7 @@ type Hit = {
 };
 
 export function ProductGrid() {
+  const t = useTranslations('Shop');
   const { hits, isLastPage, showMore } = useInfiniteHits<Hit>();
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,7 +42,7 @@ export function ProductGrid() {
   if (hits.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center rounded-lg border border-dashed border-ink/15 text-sm text-ink-soft">
-        No pieces match those filters yet — try loosening one.
+        {t('noResults')}
       </div>
     );
   }
@@ -63,7 +65,7 @@ export function ProductGrid() {
       </div>
       <div ref={sentinelRef} className="h-12" aria-hidden />
       {isLastPage && hits.length > 12 && (
-        <p className="mt-6 text-center text-sm text-ink-soft">You&rsquo;ve seen it all.</p>
+        <p className="mt-6 text-center text-sm text-ink-soft">{t('endOfResults')}</p>
       )}
     </div>
   );

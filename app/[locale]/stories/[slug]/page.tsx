@@ -1,20 +1,22 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { Link } from '@/lib/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { HorizontalProductStrip } from '@/components/shared/HorizontalProductStrip';
 import { getPersonaStories, getPersonaStory } from '@/lib/api/strapi';
 import { getProductsByPersona } from '@/lib/api/medusa';
 import type { ProductCardModel } from '@/lib/types';
+import { locales } from '@/i18n';
 
-type Params = { slug: string };
+type Params = { slug: string; locale: string };
 
-// SSG — re-generate on-demand via /api/revalidate with tag 'stories'.
-export async function generateStaticParams(): Promise<Params[]> {
+// Cross-product of locales × slugs so both /en/stories/* and /ar/stories/* are SSG.
+export async function generateStaticParams(): Promise<{ slug: string; locale: string }[]> {
   try {
     const stories = await getPersonaStories();
-    return stories.map((s) => ({ slug: s.slug }));
+    return locales.flatMap((locale) => stories.map((s) => ({ slug: s.slug, locale })));
   } catch {
     return [];
   }
@@ -26,11 +28,17 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: story.name,
     description: story.excerpt,
-    openGraph: { title: story.name, description: story.excerpt, images: story.hero_image ? [story.hero_image] : undefined },
+    openGraph: {
+      title: story.name,
+      description: story.excerpt,
+      images: story.hero_image ? [story.hero_image] : undefined,
+    },
   };
 }
 
 export default async function StoryPage({ params }: { params: Params }) {
+  unstable_setRequestLocale(params.locale);
+
   const story = await getPersonaStory(params.slug).catch(() => null);
   if (!story) notFound();
 
@@ -58,7 +66,6 @@ export default async function StoryPage({ params }: { params: Params }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
         <div className="absolute inset-x-0 bottom-0 container pb-12 text-cream-50">
-          <p className="text-xs uppercase tracking-[0.25em]">A story for</p>
           <h1 className="mt-2 font-serif text-5xl md:text-7xl">{story.name}</h1>
           <p className="mt-4 max-w-xl text-base md:text-lg">{story.excerpt}</p>
         </div>
@@ -72,12 +79,12 @@ export default async function StoryPage({ params }: { params: Params }) {
         )}
 
         <div className="my-10">
-          <HorizontalProductStrip title="Shop her picks" products={picks} />
+          <HorizontalProductStrip title={story.name} products={picks} />
         </div>
 
         <div className="flex justify-center">
           <Button asChild variant="clay" size="lg">
-            <Link href={`/shop?persona=${story.slug}`}>Shop all {story.name} picks</Link>
+            <Link href={`/shop?persona=${story.slug}`}>{story.name}</Link>
           </Button>
         </div>
       </div>

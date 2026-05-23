@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { Heart } from 'lucide-react';
+import { Link } from '@/lib/i18n/routing';
 import type { ProductCardModel } from '@/lib/types';
 import { useWishlistStore } from '@/lib/stores/wishlistStore';
 import { formatPrice } from '@/lib/utils/formatPrice';
@@ -52,7 +52,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             e.preventDefault();
             toggle(product.id);
           }}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream-50/90 backdrop-blur transition-transform hover:scale-110"
+          className="absolute end-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream-50/90 backdrop-blur transition-transform hover:scale-110"
         >
           <Heart
             className={cn(

@@ -1,14 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Link } from '@/lib/i18n/routing';
 import { useCartStore } from '@/lib/stores/cartStore';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/utils/formatPrice';
 
 export function CartSheet() {
+  const t = useTranslations('Cart');
   const isOpen = useCartStore((s) => s.isOpen);
   const setOpen = useCartStore((s) => s.setOpen);
   const items = useCartStore((s) => s.items);
@@ -20,20 +22,22 @@ export function CartSheet() {
     <Sheet open={isOpen} onOpenChange={setOpen}>
       <SheetContent side="right" className="flex w-full flex-col p-0 sm:max-w-md">
         <SheetHeader>
-          <SheetTitle>Your bag</SheetTitle>
+          <SheetTitle>{t('title')}</SheetTitle>
           <p className="text-sm text-ink-soft">
             {items.length === 0
-              ? 'Your bag is empty — find something soft.'
-              : `${items.length} ${items.length === 1 ? 'piece' : 'pieces'}`}
+              ? t('empty')
+              : items.length === 1
+                ? t('pieceOne')
+                : t('pieceOther', { count: items.length })}
           </p>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
-              <p className="text-ink-soft">Nothing here yet.</p>
+              <p className="text-ink-soft">{t('emptyHint')}</p>
               <Button asChild variant="clay" onClick={() => setOpen(false)}>
-                <Link href="/shop">Browse the shop</Link>
+                <Link href="/shop">{t('browse')}</Link>
               </Button>
             </div>
           ) : (
@@ -52,7 +56,7 @@ export function CartSheet() {
                       <div className="inline-flex items-center rounded-md border border-ink/20">
                         <button
                           type="button"
-                          aria-label="Decrease quantity"
+                          aria-label={t('decrease')}
                           onClick={() => updateQty(item.variantId, item.quantity - 1)}
                           className="flex h-8 w-8 items-center justify-center hover:bg-cream-100"
                         >
@@ -61,7 +65,7 @@ export function CartSheet() {
                         <span className="px-3 text-sm">{item.quantity}</span>
                         <button
                           type="button"
-                          aria-label="Increase quantity"
+                          aria-label={t('increase')}
                           onClick={() => updateQty(item.variantId, item.quantity + 1)}
                           className="flex h-8 w-8 items-center justify-center hover:bg-cream-100"
                         >
@@ -70,7 +74,7 @@ export function CartSheet() {
                       </div>
                       <button
                         type="button"
-                        aria-label="Remove"
+                        aria-label={t('remove')}
                         onClick={() => removeItem(item.variantId)}
                         className="text-ink-soft hover:text-ink"
                       >
@@ -87,13 +91,13 @@ export function CartSheet() {
         {items.length > 0 && (
           <div className="border-t border-ink/10 p-6">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm text-ink-soft">Subtotal</span>
+              <span className="text-sm text-ink-soft">{t('subtotal')}</span>
               <span className="text-lg font-medium text-ink">{formatPrice(subtotal)}</span>
             </div>
-            <p className="mb-4 text-xs text-ink-soft">Shipping & taxes calculated at checkout.</p>
+            <p className="mb-4 text-xs text-ink-soft">{t('taxNote')}</p>
             <Button asChild variant="clay" size="lg" className="w-full">
               <Link href="/checkout" onClick={() => setOpen(false)}>
-                Checkout
+                {t('checkout')}
               </Link>
             </Button>
           </div>

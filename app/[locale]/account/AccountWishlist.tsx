@@ -1,17 +1,15 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/lib/i18n/routing';
 import { useWishlistStore } from '@/lib/stores/wishlistStore';
 
 export function AccountWishlist() {
+  const t = useTranslations('Account');
   const productIds = useWishlistStore((s) => s.productIds);
 
   if (productIds.length === 0) {
-    return (
-      <p className="mt-3 text-sm text-ink-soft">
-        Nothing saved yet. Tap the heart on any piece to add it here.
-      </p>
-    );
+    return <p className="mt-3 text-sm text-ink-soft">{t('noWishlist')}</p>;
   }
 
   return (
