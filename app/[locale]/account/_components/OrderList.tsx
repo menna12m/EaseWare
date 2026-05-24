@@ -39,13 +39,13 @@ function formatDate(iso: string | undefined, locale: string) {
 }
 
 function StatusBadge({ status }: { status?: string }) {
-  const variant =
+  const variant: 'default' | 'clay' | 'soft' | 'outline' =
     status === 'completed' || status === 'archived'
       ? 'default'
       : status === 'canceled'
-        ? 'destructive'
-        : 'secondary';
-  return <Badge variant={variant as any}>{status || 'pending'}</Badge>;
+        ? 'outline'
+        : 'soft';
+  return <Badge variant={variant}>{status || 'pending'}</Badge>;
 }
 
 export function OrderList({ orders, locale }: { orders: Order[]; locale: string }) {

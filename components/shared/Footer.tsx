@@ -40,8 +40,13 @@ export function Footer() {
       <div className="container py-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <p className="font-serif text-2xl text-ink">easewear</p>
-            <p className="mt-3 max-w-xs text-sm text-ink-soft">{t('tagline')}</p>
+            <p className="font-display text-2xl tracking-[0.05em] text-plum">
+              Ease<span className="text-plum-light">W</span>ear
+            </p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">
+              Ease in every move
+            </p>
+            <p className="mt-4 max-w-xs text-sm text-ink-soft">{t('tagline')}</p>
             <div className="mt-5 flex items-center gap-3">
               <a
                 href="https://instagram.com/easewear"

@@ -17,25 +17,66 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Easewear palette — warm vanilla, cream, soft clay
+        // ---- Brand palette (EaseWear) -----------------------------------
+        // Use these names directly for new code; the semantic aliases below
+        // (cream / vanilla / clay / ink) are kept for backwards compatibility
+        // and now resolve to brand-correct values.
+        plum: {
+          DEFAULT: '#6B1F3B',
+          light: '#8B3552',
+          dark: '#4A1428',
+        },
+        berry: {
+          DEFAULT: '#9C2F5A',
+          light: '#B85178',
+        },
+        rose: {
+          DEFAULT: '#C86A7B',
+          light: '#DCA4AF',
+        },
+        mauve: {
+          DEFAULT: '#A88DB8',
+          light: '#C5B0D2',
+        },
+        lilac: {
+          DEFAULT: '#C3A6D6',
+          light: '#DDC9E5',
+        },
+        teal: {
+          DEFAULT: '#2D7A7B',
+          light: '#5DA0A1',
+        },
+        gold: {
+          DEFAULT: '#D4AF37',
+          dark: '#B8941F',
+          light: '#E5C868',
+        },
+
+        // ---- Semantic aliases (backwards compat) ------------------------
+        // cream = warm off-white page background
         cream: {
-          50: '#FBF8F3',
-          100: '#F6F1E7',
-          200: '#EDE3CF',
-          300: '#E0D1B0',
+          50: '#FBF7F0',
+          100: '#F4ECDE',
+          200: '#E8D9C2',
+          300: '#D9C39E',
         },
+        // vanilla = soft section background (slightly pinkish-cream)
         vanilla: {
-          DEFAULT: '#F3E9D2',
-          dark: '#D9C9A6',
+          DEFAULT: '#F4ECDE',
+          dark: '#E8D9C2',
         },
+        // clay = brand accent (now gold)
         clay: {
-          DEFAULT: '#C9A27D',
-          dark: '#8B6F4E',
+          DEFAULT: '#D4AF37',
+          dark: '#B8941F',
         },
+        // ink = primary text (now plum)
         ink: {
-          DEFAULT: '#2B2620',
-          soft: '#5B544A',
+          DEFAULT: '#6B1F3B',
+          soft: '#8B4E66',
         },
+
+        // ---- shadcn token bridges ---------------------------------------
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -71,8 +112,12 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        // Body — Montserrat Light per brand spec
+        sans: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
+        // Heading — Cinzel (closest Google Font to "Cinzel Elegant")
+        serif: ['var(--font-cinzel)', 'Georgia', 'serif'],
+        // Explicit alias for the display wordmark
+        display: ['var(--font-cinzel)', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

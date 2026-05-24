@@ -3,26 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+  /* EaseWear theme — plum primary, gold accent, cream background.
+     HSL values mapped from the brand palette:
+       Plum   #6B1F3B  → 338 56% 27%
+       Berry  #9C2F5A  → 335 54% 40%
+       Gold   #D4AF37  → 46 65% 52%
+       Cream  #FBF7F0  → 38 56% 96%
+       Cream-100 #F4ECDE → 36 49% 91%
+       Cream-200 #E8D9C2 → 35 44% 84%
+       Soft plum (ink-soft) #8B4E66 → 335 28% 42% */
   :root {
-    --background: 41 50% 96%;
-    --foreground: 30 16% 14%;
-    --card: 41 50% 96%;
-    --card-foreground: 30 16% 14%;
-    --popover: 41 50% 96%;
-    --popover-foreground: 30 16% 14%;
-    --primary: 30 16% 14%;
-    --primary-foreground: 41 50% 96%;
-    --secondary: 40 38% 88%;
-    --secondary-foreground: 30 16% 14%;
-    --muted: 40 38% 92%;
-    --muted-foreground: 30 8% 35%;
-    --accent: 30 36% 64%;
-    --accent-foreground: 41 50% 96%;
+    --background: 38 56% 96%;
+    --foreground: 338 56% 27%;
+    --card: 38 56% 96%;
+    --card-foreground: 338 56% 27%;
+    --popover: 38 56% 96%;
+    --popover-foreground: 338 56% 27%;
+    --primary: 338 56% 27%;
+    --primary-foreground: 38 56% 96%;
+    --secondary: 36 49% 91%;
+    --secondary-foreground: 338 56% 27%;
+    --muted: 36 49% 91%;
+    --muted-foreground: 335 28% 42%;
+    --accent: 46 65% 52%;
+    --accent-foreground: 338 56% 27%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 41 50% 96%;
-    --border: 30 8% 88%;
-    --input: 30 8% 88%;
-    --ring: 30 36% 64%;
+    --destructive-foreground: 38 56% 96%;
+    --border: 35 28% 84%;
+    --input: 35 28% 84%;
+    --ring: 46 65% 52%;
     --radius: 0.625rem;
   }
 
@@ -40,7 +49,7 @@
   }
 
   ::selection {
-    @apply bg-clay/30 text-ink;
+    @apply bg-gold/30 text-plum;
   }
 }
 
@@ -51,5 +60,16 @@
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Subtle gold flourish under the wordmark logo. */
+  .logo-flourish {
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #D4AF37 30%,
+      #D4AF37 70%,
+      transparent 100%
+    );
   }
 }

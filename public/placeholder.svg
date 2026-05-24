@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" role="img" aria-label="Easewear product placeholder">
-  <rect width="300" height="400" fill="#F3E9D2"/>
-  <text x="150" y="200" text-anchor="middle" font-family="serif" font-size="20" fill="#C9A27D">easewear</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" role="img" aria-label="EaseWear placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F4ECDE"/>
+      <stop offset="100%" stop-color="#E8D9C2"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#bg)"/>
+  <text x="150" y="195" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#6B1F3B" letter-spacing="2">Ease<tspan fill="#8B3552">W</tspan>ear</text>
+  <line x1="115" y1="215" x2="185" y2="215" stroke="#D4AF37" stroke-width="1"/>
+  <text x="150" y="232" text-anchor="middle" font-family="Georgia, serif" font-size="9" fill="#D4AF37" letter-spacing="3">EASE IN EVERY MOVE</text>
 </svg>

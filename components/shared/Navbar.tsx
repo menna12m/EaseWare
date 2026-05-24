@@ -46,15 +46,22 @@ export function Navbar() {
         className="sticky top-0 z-40 border-b border-ink/5 bg-cream-50/90 backdrop-blur-md"
       >
         <div className="container flex items-center justify-between gap-6">
-          <Link href="/" className="flex items-center" aria-label={t('home')}>
+          <Link href="/" className="flex flex-col items-center leading-none" aria-label={t('home')}>
             <motion.span
               initial={animateLogo ? { opacity: 0, y: -8 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="font-serif text-2xl tracking-tight text-ink"
+              className="font-display text-2xl tracking-[0.05em] text-plum"
             >
-              easewear
+              Ease<span className="text-plum-light">W</span>ear
             </motion.span>
+            <motion.span
+              initial={animateLogo ? { opacity: 0, scaleX: 0 } : false}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+              aria-hidden
+              className="logo-flourish mt-0.5 h-px w-20 origin-center"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
