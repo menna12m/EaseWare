@@ -73,11 +73,11 @@ export default async function StoryPage({ params }: { params: Params }) {
       </header>
 
       <div className="container py-12">
-        {story.body && (
+        {story.body ? (
           <div className="prose prose-stone max-w-2xl">
             <StrapiBlocks blocks={story.body} />
           </div>
-        )}
+        ) : null}
 
         <div className="my-10">
           <HorizontalProductStrip title={story.name} products={picks} />

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import { Montserrat, Cinzel } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
@@ -10,16 +10,19 @@ import { PageTransition } from '@/components/shared/PageTransition';
 import { WishlistSync } from '@/components/shared/WishlistSync';
 import { locales, localeDirection, type Locale } from '@/i18n';
 
-const inter = Inter({
+// Body — Montserrat Light per brand identity (300 + 400 for emphasis).
+const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-montserrat',
+  weight: ['300', '400', '500'],
 });
 
-const fraunces = Fraunces({
+// Heading / wordmark — Cinzel (closest Google Font to "Cinzel Elegant").
+const cinzel = Cinzel({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-fraunces',
+  variable: '--font-cinzel',
   weight: ['400', '500', '600'],
 });
 
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FBF8F3',
+  themeColor: '#FBF7F0',
   width: 'device-width',
   initialScale: 1,
 };
@@ -70,7 +73,7 @@ export default async function LocaleLayout({
   const algoliaApp = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '';
 
   return (
-    <html lang={locale} dir={dir} className={`${inter.variable} ${fraunces.variable}`} suppressHydrationWarning>
+    <html lang={locale} dir={dir} className={`${montserrat.variable} ${cinzel.variable} font-sans font-light`} suppressHydrationWarning>
       <head>
         {/* Preconnect to domains that own first-paint imagery and search. */}
         <link rel="preconnect" href={`https://res.cloudinary.com`} />

@@ -117,7 +117,7 @@ export default async function OrderPage({
               id: order.display_id ?? order.id.slice(0, 8),
             })}
           </span>
-          <Badge variant="secondary">{order.status ?? 'pending'}</Badge>
+          <Badge variant="soft">{order.status ?? 'pending'}</Badge>
         </div>
       </div>
 
