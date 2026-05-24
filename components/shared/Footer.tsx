@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/i18n/routing';
 import { Instagram, Facebook, Mail } from 'lucide-react';
+import { ButterflyLogo } from '@/components/shared/ButterflyLogo';
 
 export function Footer() {
   const t = useTranslations('Footer');
@@ -40,6 +41,7 @@ export function Footer() {
       <div className="container py-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
+            <ButterflyLogo size={48} className="mb-2" />
             <p className="font-display text-2xl tracking-[0.05em] text-plum">
               Ease<span className="text-plum-light">W</span>ear
             </p>

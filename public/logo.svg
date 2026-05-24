@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" fill="none" role="img" aria-label="EaseWear">
+  <defs>
+    <linearGradient id="ew-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C3A6D6"/>
+      <stop offset="55%" stop-color="#A88DB8"/>
+      <stop offset="100%" stop-color="#6B1F3B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wings: two pairs of rotated ellipses, gold-stroked -->
+  <g transform="translate(60 55)" stroke="#D4AF37" stroke-width="0.8">
+    <ellipse cx="0" cy="0" rx="32" ry="22" fill="url(#ew-wing)" transform="translate(-26 -10) rotate(-30)"/>
+    <ellipse cx="0" cy="0" rx="32" ry="22" fill="url(#ew-wing)" transform="translate(26 -10) rotate(30)"/>
+    <ellipse cx="0" cy="0" rx="22" ry="14" fill="url(#ew-wing)" transform="translate(-18 18) rotate(28)"/>
+    <ellipse cx="0" cy="0" rx="22" ry="14" fill="url(#ew-wing)" transform="translate(18 18) rotate(-28)"/>
+  </g>
+
+  <!-- Body — gold figure-8 silhouette echoing the brand mark -->
+  <path d="M 60 22 C 56 32 64 42 60 50 C 56 58 64 70 60 85" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <circle cx="60" cy="20" r="2.5" fill="#D4AF37"/>
+
+  <!-- Jewel drops at the lower wing tips -->
+  <circle cx="32" cy="88" r="2" fill="#2D7A7B"/>
+  <circle cx="88" cy="88" r="2" fill="#9C2F5A"/>
+</svg>
