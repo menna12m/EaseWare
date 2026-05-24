@@ -9,6 +9,7 @@ import { useCartStore } from '@/lib/stores/cartStore';
 import { useWishlistStore } from '@/lib/stores/wishlistStore';
 import { CartSheet } from '@/components/shared/CartSheet';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
+import { ButterflyLogo } from '@/components/shared/ButterflyLogo';
 import { cn } from '@/lib/utils/cn';
 
 export function Navbar() {
@@ -47,18 +48,25 @@ export function Navbar() {
       >
         <div className="container flex items-center justify-between gap-6">
           <Link href="/" className="flex flex-col items-center leading-none" aria-label={t('home')}>
+            <motion.div
+              initial={animateLogo ? { opacity: 0, y: -10, scale: 0.9 } : false}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+            >
+              <ButterflyLogo size={36} />
+            </motion.div>
             <motion.span
               initial={animateLogo ? { opacity: 0, y: -8 } : false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="font-display text-2xl tracking-[0.05em] text-plum"
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
+              className="mt-0.5 font-display text-xl tracking-[0.05em] text-plum"
             >
               Ease<span className="text-plum-light">W</span>ear
             </motion.span>
             <motion.span
               initial={animateLogo ? { opacity: 0, scaleX: 0 } : false}
               animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.35 }}
               aria-hidden
               className="logo-flourish mt-0.5 h-px w-20 origin-center"
             />
